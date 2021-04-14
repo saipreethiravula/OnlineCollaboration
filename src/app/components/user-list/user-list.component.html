@@ -1,0 +1,124 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h1 style="text-align: center;">Users</h1><br/>
+        <div class="row" [hidden]="!deleteMessage">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <div class="alert alert-info alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">X</button>
+                    <strong>User data deleted</strong>
+                </div>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </div>
+
+    <div class="panel-body">
+        <table class="table table-hover table-sm" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+            <thead class="thead-light">
+                <tr>
+                    <th>User Id</th>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>IsOnline</th>
+                    <th>Enabled</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users">
+                    <td>{{user.userId}}</td>
+                    <td>{{user.firstName}}</td>
+                    <td>{{user.lastName}}</td>
+                    <td>{{user.username}}</td>
+                    <td>{{user.password}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.role}}</td>
+                    <td>{{user.status}}</td>
+                    <td>{{user.isOnline}}</td>
+                    <td>{{user.enabled}}</td>
+                    <td>
+                        <button (click)="deleteUser(user.userId)" class="btn btn-primary">
+                            <i class="fa fa-futboll-0">Delete</i>
+                        </button>
+                        <button (click)="updateUser(user.userId)" class="btn btn-info" data-toggle="modal" data-target="#myModal">
+                            Update
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--myModal-->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form [formGroup]="userupdateform" (ngSubmit)="update(user)">
+                <!--Modal Header-->
+                <div class="modal-header">
+                    <h4 class="modal-title" style="text-align: center;">Update User</h4>
+                </div>
+                <!--Modal Body-->
+                <div class="modal-body" *ngFor="let user of userlist">
+                    <div [hidden]="isupdated">
+                        <input type="hidden" class="form-control" formControlName="userId" [(ngModel)]="user.userId">
+                        <div class="form-group">
+                            <label for="firstName">FirstName</label>
+                            <input type="text" class="form-control" formControlName="firstName" [(ngModel)]="user.firstName" disabled="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">LastName</label>
+                            <input type="text" class="form-control" formControlName="lastName" [(ngModel)]="user.lastName" disabled="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" formControlName="username" [(ngModel)]="user.username" disabled="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">FirstName</label>
+                            <input type="password" class="form-control" formControlName="password" [(ngModel)]="user.password">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="text" class="form-control" formControlName="email" [(ngModel)]="user.email">
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Role</label>
+                            <input type="text" class="form-control" formControlName="role" [(ngModel)]="user.role" disabled="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="firstName">FirstName</label>
+                            <input type="text" class="form-control" formControlName="firstName" [(ngModel)]="user.firstName" disabled="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <input type="text" class="form-control" formControlName="status" [(ngModel)]="user.status" disabled="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="isOnline">IsOnline</label>
+                            <input type="text" class="form-control" formControlName="isOnline" [(ngModel)]="user.isOnline" disabled="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="enabled">Enabled</label>
+                            <input type="text" class="form-control" formControlName="enabled" [(ngModel)]="user.enabled" disabled="true">
+                        </div>
+                    </div>
+                    <div [hidden]="!isupdated">
+                        <h4>User Detail Updated!</h4>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" [hidden]="isupdated">Update</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="changeisUpdate()">Close</button>
+                </div>    
+            </form>
+        </div>
+    </div>
+</div>
